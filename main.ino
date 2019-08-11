@@ -55,7 +55,8 @@ const int DIO = 8; //Set the DIO pin connection to the display
 
 TM1637Display display(CLK, DIO);  //set up the 4-Digit Display.
 
-boolean flag = 0; // 0 - configure stage; 1 - operation stage
+boolean SC_flag = 0; //for single click event flag; 0 - normal stage; 1 - configure stage
+boolean DC_flag = 0; //for double click event flag; 0 - operation stage; 1 - configure stage
 /* digit1 = last default value;
 digit2 = last default value;
 digit3 = last default value;
@@ -107,13 +108,34 @@ attachInterrupt(1, updateEncoder, CHANGE);
 loop(){
  // Checking Single click or double click
    int b = checkButton();
-   if (flag==1){
+   if (b==1) clickEvent();
+   if (b==2) doubleClickEvent();
+    
+   if (DC_flag==1){
        if (cursor_pos==3){
            //blink digit3
+           display.showNumberDec(digit2,false,2,2); //Show two digit number; position 2; no leading 0
+           delay(500);
+           display.showNumberDec(,false,2,2); //Show two digit number; position 2; no leading 0
+           delay(500);
+           if (SC_flag==1) chg_digit0=0;
+            }
            else if (cursor_pos == 2)
            // blink digit2
+           display.showNumberDec(digit1,false,1,1); //Show two digit number; position 2; no leading 0
+           delay(500);
+           display.showNumberDec(,false,1,1); //Show two digit number; position 2; no leading 0
+           delay(500);
+            if (SC_flag==1) chg_digit1=1;
+            } 
            else 
            // blink digit1
+           display.showNumberDec(digit0,false,1,0); //Show two digit number; position 2; no leading 0
+           delay(500);
+           display.showNumberDec(,false,1,0); //Show two digit number; position 2; no leading 0
+           delay(500);
+            if (SC_flag==1) chg_digit2==;
+            }
            }
        
 //display.showNumberDec(10,false,2,0);
@@ -159,8 +181,11 @@ int checkButton() {
        DCwaiting = false;
    }
 }
+clickEvent(){
+    SC_flag=!SC_flag;
+}
 doubleClickEvent(){
-    flag=!flag;
+    DC_flag1=!DC_flag;
 
 }
     
