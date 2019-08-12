@@ -118,9 +118,9 @@ loop(){
            delay(500);
            display.showNumberDec(,false,2,2); //Show two digit number; position 2; no leading 0
            delay(500);
-           if (SC_flag==1) chg_digit0=0;
+           if (SC_flag==1) chg_digit0=1;
             }
-           else if (cursor_pos == 2)
+           else if (cursor_pos == 2){
            // blink digit2
            display.showNumberDec(digit1,false,1,1); //Show two digit number; position 2; no leading 0
            delay(500);
@@ -128,13 +128,13 @@ loop(){
            delay(500);
             if (SC_flag==1) chg_digit1=1;
             } 
-           else 
+           else if (cursor_pos == 1){
            // blink digit1
            display.showNumberDec(digit0,false,1,0); //Show two digit number; position 2; no leading 0
            delay(500);
            display.showNumberDec(,false,1,0); //Show two digit number; position 2; no leading 0
            delay(500);
-            if (SC_flag==1) chg_digit2==;
+            if (SC_flag==1) chg_digit2==1;
             }
            }
        
